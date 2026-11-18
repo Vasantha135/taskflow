@@ -9,6 +9,11 @@ export const swaggerSpec = swaggerJsdoc({
     openapi: '3.0.3',
     info: { title: 'TaskFlow API', version: '0.1.0' },
     servers: [{ url: '/api/v1' }],
+    components: {
+      securitySchemes: {
+        bearerAuth: { type: 'http', scheme: 'bearer', bearerFormat: 'JWT' },
+      },
+    },
   },
   apis: [routesGlob],
 });
