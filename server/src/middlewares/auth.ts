@@ -1,4 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
+import { HydratedDocument } from 'mongoose';
+import { IWorkspace, Role } from '../models/Workspace';
 import { ApiError } from '../utils/ApiError';
 import { verifyAccessToken } from '../utils/jwt';
 
@@ -6,6 +8,8 @@ declare global {
   namespace Express {
     interface Request {
       user?: { id: string };
+      workspace?: HydratedDocument<IWorkspace>;
+      memberRole?: Role;
     }
   }
 }
