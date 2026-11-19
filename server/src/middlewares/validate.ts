@@ -3,7 +3,7 @@ import { ZodType } from 'zod';
 import { ApiError } from '../utils/ApiError';
 
 export const validate = (schema: ZodType) => (req: Request, _res: Response, next: NextFunction) => {
-  const result = schema.safeParse({ body: req.body });
+  const result = schema.safeParse({ body: req.body, params:req.params,query:req.query});
   if (!result.success) {
     return next(
       ApiError.badRequest(
@@ -12,6 +12,7 @@ export const validate = (schema: ZodType) => (req: Request, _res: Response, next
       ),
     );
   }
-  req.body = (result.data as { body: unknown }).body;
+  const data  = result.data as { body: unknown };
+    if(data.body) req.body = data.body;
   next();
 };
